@@ -1,4 +1,3 @@
-# Configure the Azure provider
 terraform {
   required_providers {
     azurerm = {
@@ -14,7 +13,14 @@ provider "azurerm" {
   features {}
 }
 
+resource "random_string" "random_id" {
+  length  = 8
+  special = false
+  upper   = false
+  numeric = true
+}
+
 resource "azurerm_resource_group" "rg" {
-  name     = "rg-dp-hkr-test"
+  name     = format("rg-tf-workshop-pre-%s", random_string.random_id.result)
   location = "switzerlandnorth"
 }
