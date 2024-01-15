@@ -20,20 +20,15 @@ resource "random_string" "random_id" {
   numeric = true
 }
 
-resource "azurerm_storage_account" "the-best-storage-account-ever" {
-  name                     = format("sttfworkshop%s", random_string.random_id.result)
-  resource_group_name      = azurerm_resource_group.the-best-resource-group-ever.name
-  location                 = azurerm_resource_group.the-best-resource-group-ever.location
-  account_tier             = "Standard"
-  account_replication_type = "LRS"
-
+module "azure_resources" {
+  source                           = "./modules/azure_resource_group_and_storage"
+  resource_group_name              = format("rg-tf-workshop-%s", random_string.random_id.result)
+  location                         = "switzerlandnorth"
+  storage_account_name             = format("sttfworkshop%s", random_string.random_id.result)
+  storage_account_tier             = "Standard"
+  storage_account_replication_type = "LRS"
   tags = {
     owner       = var.owner
     environment = var.environment
   }
-}
-
-resource "azurerm_resource_group" "the-best-resource-group-ever" {
-  name     = format("rg-tf-workshop-%s", random_string.random_id.result)
-  location = "switzerlandnorth"
 }
