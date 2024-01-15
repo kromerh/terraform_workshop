@@ -3,5 +3,6 @@ output "resource_group" {
 }
 
 output "storage_account" {
-  value = azurerm_storage_account.this
+  value     = azurerm_storage_account.this
+  sensitive = true
 }

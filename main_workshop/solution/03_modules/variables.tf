@@ -7,4 +7,5 @@ variable "owner" {
 variable "environment" {
   type        = string
   description = "The environment of the resources"
+  default = "tst"
 }
